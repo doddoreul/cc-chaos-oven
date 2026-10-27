@@ -1409,6 +1409,9 @@
   function buyRift() {
     const c = riftCost();
     if (S.run.cookies < c) return;
+    const taken = S.universes.map((u) => u.tpl);
+    const pool = UNIV_TPL.map((_, i) => i).filter((i) => !taken.includes(i));
+    if (pool.length === 0) return;
     S.run.cookies -= c;
     log(openRift());
     render();
@@ -1747,7 +1750,8 @@
 
     const rc = riftCost();
     $('#rift-btn').textContent = T('rift.btn', { c: fmt(rc) });
-    $('#rift-btn').disabled = R.cookies < rc;
+    const allVisited = S.universes.length >= UNIV_TPL.length;
+    $('#rift-btn').disabled = R.cookies < rc || allVisited;
     $('#univ-line').textContent = T('rift.visited', { n: S.life.universes });
     renderUniverses();
 
