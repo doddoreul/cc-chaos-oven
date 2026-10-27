@@ -1,0 +1,1311 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Four à Cookies Chaos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+  :root {
+    --bg: #f4ece1;
+    --panel: #fffaf3;
+    --ink: #2a1c15;
+    --muted: #7a6356;
+    --line: #e4d4bf;
+    --accent: #b8701f;
+    --accent-ink: #fff8ec;
+    --hot: #c2374f;
+    --ok: #2f8a6a;
+    --gold: #d99a1c;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1c131f;
+      --panel: #281c2b;
+      --ink: #f7ecdf;
+      --muted: #b59fa0;
+      --line: #43303f;
+      --accent: #f2b84b;
+      --accent-ink: #2a1a0c;
+      --hot: #ff6b8b;
+      --ok: #6fd3a8;
+      --gold: #ffd25a;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1c131f;
+    --panel: #281c2b;
+    --ink: #f7ecdf;
+    --muted: #b59fa0;
+    --line: #43303f;
+    --accent: #f2b84b;
+    --accent-ink: #2a1a0c;
+    --hot: #ff6b8b;
+    --ok: #6fd3a8;
+    --gold: #ffd25a;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 20px;
+    margin: 0;
+  }
+  h1, h2 { font-family: 'Fraunces', Georgia, serif; margin: 0; }
+  h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; letter-spacing: -0.01em; text-wrap: balance; }
+  h2 { font-size: 18px; font-weight: 600; }
+  p { margin: 0 0 8px; }
+  small { color: var(--muted); font-size: 12px; }
+  button { font: inherit; color: inherit; }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  .app {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: start;
+  }
+  @media (max-width: 820px) { .app { grid-template-columns: minmax(0, 1fr); } }
+  .stage-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+  .top { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+  .tag { color: var(--muted); }
+  .life { color: var(--muted); font-size: 13px; }
+  .life b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .panel-card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 16px;
+    min-width: 0;
+  }
+
+  .bake {
+    position: relative;
+    min-height: 460px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    overflow: hidden;
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    background:
+      radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 65%),
+      var(--panel);
+    padding: 20px;
+  }
+  .counter { text-align: center; }
+  .big { font-family: 'Fraunces', Georgia, serif; font-weight: 800; font-size: clamp(38px, 8vw, 60px); line-height: 1; font-variant-numeric: tabular-nums; }
+  .rates { display: flex; gap: 18px; flex-wrap: wrap; justify-content: center; color: var(--muted); }
+  .rates b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+  .cookie {
+    width: min(270px, 62vw);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(255,255,255,.22), transparent 40%),
+      radial-gradient(circle at 22% 62%, #3a2016 9px, transparent 10px),
+      radial-gradient(circle at 68% 30%, #3a2016 8px, transparent 9px),
+      radial-gradient(circle at 60% 72%, #3a2016 10px, transparent 11px),
+      radial-gradient(circle at 80% 58%, #3a2016 7px, transparent 8px),
+      radial-gradient(circle at 40% 42%, #3a2016 7px, transparent 8px),
+      radial-gradient(circle at 50% 50%, #e0a86a, #b8742f 70%, #8a4d1f);
+    box-shadow: 0 18px 40px rgba(0,0,0,.3), inset -12px -16px 30px rgba(90,40,10,.35);
+    transition: transform .08s ease;
+    touch-action: manipulation;
+  }
+  .cookie:active, .cookie.pop { transform: scale(.96); }
+
+  .golden {
+    position: absolute;
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    border: 2px solid #fff3b0;
+    background: radial-gradient(circle at 35% 30%, #fff7c2, #f6c33e 55%, #b9790f);
+    box-shadow: 0 0 28px #ffd25a, 0 0 6px #fff;
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+    animation: wiggle 1.4s ease-in-out infinite;
+    z-index: 2;
+  }
+  @keyframes wiggle { 0%, 100% { rotate: -6deg; } 50% { rotate: 6deg; } }
+
+  .float {
+    position: absolute;
+    pointer-events: none;
+    font-weight: 800;
+    color: var(--gold);
+    transform: translate(-50%, 0);
+    animation: rise .9s ease-out forwards;
+    z-index: 3;
+  }
+  @keyframes rise { from { opacity: 1; } to { opacity: 0; translate: 0 -50px; } }
+
+  .buffs { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; min-height: 28px; }
+  .buff {
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    border: 1px solid var(--accent);
+  }
+  .buff.clot { background: color-mix(in srgb, var(--hot) 20%, transparent); border-color: var(--hot); }
+  .buff span { font-variant-numeric: tabular-nums; }
+
+  .wrath-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .meter { height: 14px; background: var(--line); border-radius: 99px; overflow: hidden; }
+  #anger-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--gold), var(--hot)); transition: width .3s ease; }
+  .wrath-foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+  #anger-stage { font-weight: 800; color: var(--hot); }
+
+  .log ul { list-style: none; margin: 8px 0 0; padding: 0; max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+  .log li { color: var(--muted); font-size: 13px; padding-left: 10px; border-left: 2px solid var(--line); }
+  .log li:first-child { color: var(--ink); border-color: var(--accent); }
+
+  .side { position: relative; }
+  .tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
+  .tabs button {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .modes { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; color: var(--muted); }
+  .modes button {
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+  }
+  .modes button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 800; }
+
+  .list { display: flex; flex-direction: column; gap: 8px; max-height: 62vh; overflow-y: auto; padding-right: 2px; }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    flex: none;
+  }
+  .row:hover:not(:disabled) { border-color: var(--accent); }
+  .row:disabled { opacity: .5; cursor: not-allowed; }
+  .row:not(:disabled) { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  .dot {
+    width: 26px; height: 26px; border-radius: 50%; flex: none;
+    background: radial-gradient(circle at 35% 30%, hsl(var(--h) 90% 75%), hsl(var(--h) 60% 40%));
+  }
+  .info { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+  .info b { font-size: 14px; }
+  .meta { display: flex; flex-direction: column; align-items: flex-end; font-variant-numeric: tabular-nums; font-size: 13px; text-align: right; flex: none; }
+  .meta .count { color: var(--muted); font-size: 12px; }
+  .meta .cost { font-weight: 800; }
+  .row.done { order: 999; opacity: .45; }
+  .row.locked { opacity: .55; }
+
+  .ach-list { display: grid; gap: 8px; }
+  .ach { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; opacity: .45; display: flex; flex-direction: column; }
+  .ach.got { opacity: 1; border-color: var(--gold); background: color-mix(in srgb, var(--gold) 10%, transparent); }
+
+  .card-block { border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+  .big-btn {
+    width: 100%;
+    margin: 10px 0 6px;
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 800;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .big-btn:disabled { opacity: .45; cursor: not-allowed; }
+  .big-btn.danger { background: transparent; color: var(--hot); border: 1px solid var(--hot); }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+  .stat { border: 1px solid var(--line); border-radius: 12px; padding: 10px; }
+  .stat b { display: block; font-size: 17px; font-variant-numeric: tabular-nums; }
+
+  .modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: grid; place-items: center; padding: 16px; z-index: 20; }
+  .modal-box { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 20px; max-width: 380px; width: 100%; }
+  .modal-box p { color: var(--muted); margin: 8px 0 14px; }
+  .actions { display: flex; gap: 8px; justify-content: flex-end; }
+  .actions button { padding: 8px 14px; border-radius: 10px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-weight: 700; }
+  .actions .primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+
+  .footer { text-align: center; color: var(--muted); font-size: 12px; padding: 28px 0 8px; }
+  .footer b { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<main class="app">
+  <div class="stage-col">
+    <header class="top">
+      <div>
+        <h1>Four à Cookies Chaos</h1>
+        <p class="tag">Cuis, achète, et évite de contrarier les mamies.</p>
+      </div>
+      <div class="life">Total cuit <b id="lifetime">0</b></div>
+    </header>
+
+    <section class="bake" id="stage" aria-label="Boulangerie">
+      <div class="counter">
+        <div id="cookies" class="big">0</div>
+        <div>cookies</div>
+      </div>
+      <div class="rates">
+        <span><b id="cps">0</b> par seconde</span>
+        <span><b id="click">1</b> par clic</span>
+      </div>
+      <button id="cookie" class="cookie" aria-label="Cuire un cookie (ou appuie sur Espace)"></button>
+      <div id="buffs" class="buffs" aria-live="polite"></div>
+    </section>
+
+    <section class="panel-card" aria-label="Colère des mamies">
+      <div class="wrath-head">
+        <h2>Colère des mamies</h2>
+        <span id="anger-stage">Sereines</span>
+      </div>
+      <div class="meter" role="meter" aria-label="Colère des mamies" aria-valuemin="0" aria-valuemax="100" id="anger-meter"><div id="anger-fill"></div></div>
+      <div class="wrath-foot">
+        <small id="anger-num">0 / 100</small>
+        <small id="stage-mult">Aucune pénalité</small>
+      </div>
+    </section>
+
+    <section class="panel-card log" aria-label="Journal de la boulangerie">
+      <h2>Journal de la boulangerie</h2>
+      <ul id="log" aria-live="polite"></ul>
+    </section>
+  </div>
+
+  <aside class="side panel-card">
+    <nav class="tabs" role="tablist" aria-label="Sections de la boutique">
+      <button role="tab" data-tab="buildings" aria-selected="true">Bâtiments</button>
+      <button role="tab" data-tab="upgrades" aria-selected="false">Améliorations</button>
+      <button role="tab" data-tab="achievements" aria-selected="false">Succès</button>
+      <button role="tab" data-tab="wrath" aria-selected="false">Mamies</button>
+      <button role="tab" data-tab="ascend" aria-selected="false">Ascension</button>
+    </nav>
+
+    <div id="tab-buildings" class="panel">
+      <div class="modes">
+        <span>Acheter</span>
+        <button data-mode="1" aria-pressed="true">1</button>
+        <button data-mode="10" aria-pressed="false">10</button>
+        <button data-mode="max" aria-pressed="false">Max</button>
+      </div>
+      <div id="buildings" class="list"></div>
+    </div>
+
+    <div id="tab-upgrades" class="panel" hidden>
+      <div id="upgrades" class="list"></div>
+    </div>
+
+    <div id="tab-achievements" class="panel" hidden>
+      <p><b id="ach-count">0</b> sur <span id="ach-total">0</span> obtenus. Chacun ajoute 1 % à toute la production.</p>
+      <div id="achievements" class="ach-list"></div>
+    </div>
+
+    <div id="tab-wrath" class="panel" hidden>
+      <div class="card-block">
+        <p>La colère des mamies monte tant qu'elles possèdent des mamies, et plus vite à mesure que la partie avance. Au-delà de 25, 50, 75 et 100, elles rognent ta production et pillent parfois la réserve.</p>
+      </div>
+      <div class="card-block">
+        <h2>Serment de l'Ancien</h2>
+        <p>Calme les mamies un moment et fait baisser leur colère de 20. Le prix monte à chaque serment de la partie.</p>
+        <button id="pledge-btn" class="big-btn">Prêter le serment de l'Ancien</button>
+        <small>Coût <b id="pledge-cost">0</b> cookies · Serments cette partie : <span id="pledges-run">0</span></small>
+      </div>
+      <div class="card-block">
+        <h2>Grimoire de la pâte</h2>
+        <p>Chaque clic et chaque seconde de four font pousser de la magie.</p>
+        <small>Mana <b id="mana">0</b> / <span id="mana-max">200</span></small>
+        <div id="spells" class="list"></div>
+      </div>
+      <div class="card-block">
+        <h2>Voyage multiversel</h2>
+        <p>Ouvre une faille vers un univers parallèle où ta production est multipliée pendant un temps.</p>
+        <small>Univers visités : <b id="univ-count">0</b></small>
+        <button id="rift-btn" class="big-btn">Ouvrir une faille (<span id="rift-cost">0</span> cookies)</button>
+      </div>
+    </div>
+
+    <div id="tab-ascend" class="panel" hidden>
+      <div class="card-block">
+        <h2>Ascension</h2>
+        <p>Repars d'un four propre. Cookies, bâtiments et améliorations sont remis à zéro. Les puces célestes et les succès sont conservés, et chaque puce ajoute 2 % à la production pour toujours.</p>
+        <div class="stat-grid">
+          <div class="stat"><small>Puces à gagner</small><b id="ascend-gain">0</b></div>
+          <div class="stat"><small>Puces célestes</small><b id="chips">0</b></div>
+          <div class="stat"><small>Bonus des puces</small><b id="chip-bonus">+0 %</b></div>
+          <div class="stat"><small>Cuit cette partie</small><b id="run-baked">0</b></div>
+        </div>
+        <small id="next-chip"></small>
+        <button id="ascend-btn" class="big-btn">Ascension</button>
+      </div>
+      <div class="card-block">
+        <h2>Historique</h2>
+        <div class="stat-grid">
+          <div class="stat"><small>Clics</small><b id="st-clicks">0</b></div>
+          <div class="stat"><small>Cookies dorés</small><b id="st-golden">0</b></div>
+          <div class="stat"><small>Ascensions</small><b id="st-asc">0</b></div>
+          <div class="stat"><small>Améliorations achetées</small><b id="st-up">0</b></div>
+        </div>
+        <button id="reset-btn" class="big-btn danger">Tout effacer</button>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer class="footer">
+  Développé par <b>DoigtDePied</b> · <span id="version"></span>
+</footer>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="m-title">
+    <h2 id="m-title"></h2>
+    <p id="m-text"></p>
+    <div class="actions">
+      <button id="m-cancel">Annuler</button>
+      <button id="m-ok" class="primary">Valider</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  'use strict';
+
+  const VERSION = '3.0.0';
+  const RELEASE_LABEL = 'Mise à jour barjo';
+  const KEY = 'cookie-chaos-v1';
+  const RATE = 1.15;
+  const MANA_CAP = 200;
+  const SUF = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
+
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => [...document.querySelectorAll(s)];
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const pickRandom = (list) => list[Math.floor(Math.random() * list.length)];
+
+  // French number formatting: comma as decimal separator.
+  const fmt = (n) => {
+    if (!isFinite(n)) return '∞';
+    let out;
+    if (n < 10) out = (Math.floor(n * 10) / 10).toFixed(1);
+    else if (n < 1000) out = String(Math.floor(n));
+    else {
+      const exp = Math.floor(Math.log10(n) / 3);
+      if (exp >= SUF.length) return n.toExponential(2).replace('+', '').replace('.', ',');
+      const v = n / Math.pow(1000, exp);
+      out = v.toFixed(v < 10 ? 2 : v < 100 ? 1 : 0) + SUF[exp];
+    }
+    return out.replace('.', ',');
+  };
+
+  const BUILDINGS = [
+    { key: 'cursor', name: 'Curseur', base: 15, cps: 0.1, desc: 'Clique pour toi, lentement.' },
+    { key: 'grandma', name: 'Mamie', base: 100, cps: 1, desc: 'Cuisine, papote et juge.' },
+    { key: 'farm', name: 'Ferme', base: 1100, cps: 8, desc: 'Des plants de cookies dans le jardin.' },
+    { key: 'mine', name: 'Mine', base: 12000, cps: 47, desc: 'Extrait des pépites de chocolat du sol.' },
+    { key: 'factory', name: 'Usine', base: 130000, cps: 260, desc: 'Produit en série des cookies suspicieusement identiques.' },
+    { key: 'bank', name: 'Banque', base: 1.4e6, cps: 1400, desc: 'Investit tes miettes. Les rendements sont des miettes.' },
+    { key: 'temple', name: 'Temple', base: 2e7, cps: 7800, desc: 'Bénit la pâte. Surtout, collecte la dîme.' },
+    { key: 'wizard', name: 'Tour du sorcier', base: 3.3e8, cps: 44000, desc: 'Fait apparaître des cookies du néant.' },
+    { key: 'shipment', name: 'Expédition', base: 5.1e9, cps: 260000, desc: "Livre des cookies à des inconnus qui n'ont rien demandé." },
+    { key: 'lab', name: 'Laboratoire alchimique', base: 7.5e10, cps: 1.6e6, desc: 'Transforme le plomb en une quantité inquiétante de beurre.' },
+    { key: 'portal', name: 'Portail', base: 1e12, cps: 1e7, desc: 'Ouvre une porte vers la dimension des cookies.' },
+    { key: 'timemachine', name: 'Machine à remonter le temps', base: 1.4e13, cps: 6.5e7, desc: "Ramène les cookies d'hier." },
+    { key: 'condenser', name: "Condenseur d'antimatière", base: 1.7e14, cps: 4.3e8, desc: "Condense l'antimatière en pâte." },
+    { key: 'prism', name: 'Prisme', base: 2.1e15, cps: 2.9e9, desc: 'Réfracte la lumière en sucre doré.' },
+  ];
+
+  const STAGE_NAMES = ['Sereines', 'Grognonnes', 'Renfrognées', 'Furieuses', 'Mamipocalypse'];
+  const STAGE_TEXT = [
+    'Les mamies sont sereines. Pour l’instant.',
+    'Les mamies grognent à propos des miettes.',
+    'Les mamies sont renfrognées. Quelqu’un a parlé de loto.',
+    'Les mamies sont furieuses. Cachez les rouleaux à pâtisserie.',
+    'MAMIPOCALYPSE. Prête serment ou perds la majeure partie de ta fournée.',
+  ];
+  const STAGE_MULT = [1, 0.95, 0.8, 0.6, 0.35];
+
+  const BUFF_NAMES = {
+    frenzy: 'Frénésie x7',
+    storm: 'Tempête de clics x77',
+    clot: 'Caillot x0,5',
+    bingo: 'Soirée Bingo',
+    rain: 'Pluie de cookies',
+    mutant: 'Mutation x2',
+    tsunami: 'Tsunami de pâte',
+    gravity: 'Gravité inversée',
+    blessing: 'Bénédiction du Four x1,5',
+  };
+
+  // Random chaos events fired during a run.
+  const EVENTS = [
+    { name: 'Soirée Bingo', fn() {
+        addBuff('bingo', 60);
+        return 'Les mamies crient B-7. Colère gelée pendant 60 secondes.'; } },
+    { name: 'Pluie de cookies', fn() {
+        addBuff('rain', 20);
+        return 'Des cookies tombent du ciel pendant 20 secondes.'; } },
+    { name: 'Lot mutant', fn() {
+        const b = pickRandom(BUILDINGS);
+        addBuff('mutant', 60, b.key);
+        return b.name + ' a muté. Production x2 pendant 60 secondes.'; } },
+    { name: 'Tsunami de pâte', fn() {
+        addBuff('tsunami', 15);
+        return 'La cuisine est inondée de pâte. Clics divisés par deux pendant 15 secondes.'; } },
+    { name: 'Gravité inversée', fn() {
+        addBuff('gravity', 30);
+        return 'La colère des mamies s’évapore pendant 30 secondes. Elles flottent.'; } },
+    { name: 'Visite du maire', fn() {
+        const g = Math.max(100, rawCps() * 300);
+        addCookies(g);
+        S.run.anger = Math.max(0, S.run.anger - 10);
+        return 'Le maire goûte tes cookies, les mange tous et laisse une plaque. +' + fmt(g) + ' cookies.'; } },
+  ];
+
+  const UNIVERSE_NAMES = [
+    'Univers Pâte', 'Univers Chocolat noir', 'Néant beurré', 'Dimension Sucrée',
+    'Monde-Croûte', 'Univers Miroir des Mamies', 'Dimension des Pépites', 'Réalité sans four',
+    'Plan Glaçage', 'Strate Levure',
+  ];
+
+  // Spells cast with mana from the grimoire.
+  const SPELLS = [
+    { id: 'summon', name: 'Invoquer une Mamie cosmique', desc: 'Fait apparaître un cookie doré immédiatement.', cost: 30,
+      cast() { spawnGolden(); return 'Une Mamie cosmique descend du ciel avec un cookie doré.'; } },
+    { id: 'bless', name: 'Bénédiction du Four', desc: 'Production x1,5 pendant 60 secondes.', cost: 50,
+      cast() { addBuff('blessing', 60); return 'Le four ronronne, béni par des ancêtres.'; } },
+    { id: 'exorcise', name: 'Exorcisme de la colère', desc: 'Fait baisser la colère des mamies de 40.', cost: 40,
+      cast() { S.run.anger = Math.max(0, S.run.anger - 40); return 'Les mamies sont exorcisées. Elles ricanent doucement.'; } },
+    { id: 'transmute', name: 'Transmutation', desc: 'Gagne 300 secondes de production instantanément.', cost: 80,
+      cast() { const g = cpsNow() * 300; addCookies(g); return 'Le plomb devient beurre. +' + fmt(g) + ' cookies.'; } },
+    { id: 'rift', name: 'Faille dimensionnelle', desc: 'Ouvre une faille vers un univers au hasard.', cost: 120,
+      cast() { return openRift(); } },
+  ];
+
+  const HEAVEN = [
+    { id: 'h-lucky', name: 'Four porte-bonheur', desc: 'Les cookies dorés arrivent environ 50 % plus vite.', cost: 3 },
+    { id: 'h-immortal', name: 'Mamies immortelles', desc: 'La colère des mamies monte deux fois moins vite.', cost: 5 },
+    { id: 'h-head', name: 'Bon départ', desc: 'Chaque nouvelle ascension commence avec 1 000 cookies.', cost: 4 },
+    { id: 'h-combo', name: 'Coup de sucre', desc: 'Plafond des combos relevé de 50 à 100.', cost: 6 },
+    { id: 'h-chaos', name: 'Assurance chaos', desc: 'Les événements arrivent deux fois plus souvent, mais les mamies ne pillent plus.', cost: 8 },
+    { id: 'h-mut', name: 'Pâte génétique', desc: 'Les mutations sont triplées au lieu d’être doublées.', cost: 7 },
+    { id: 'h-grimoire', name: 'Grimoire ancestral', desc: 'Le mana se régénère deux fois plus vite.', cost: 5 },
+  ];
+
+  const GOLD = [
+    { name: 'Frénésie', w: 40, fn() { addBuff('frenzy', 30); return 'Production x7 pendant 30 secondes.'; } },
+    { name: 'Miettes porte-bonheur', w: 30, fn() {
+        const g = Math.max(13, Math.min(rawCps() * 900, S.run.cookies * 0.15));
+        addCookies(g);
+        return '+' + fmt(g) + ' cookies.'; } },
+    { name: 'Tempête de clics', w: 18, fn() { addBuff('storm', 13); return 'Clics x77 pendant 13 secondes.'; } },
+    { name: 'Caillot', w: 8, fn() { addBuff('clot', 40); return 'Production divisée par deux pendant 40 secondes. Désolé.'; } },
+    { name: 'Mutation dorée', w: 5, fn() {
+        const b = pickRandom(BUILDINGS);
+        addBuff('mutant', 90, b.key);
+        return b.name + ' a muté pendant 90 secondes, production x2.'; } },
+    { name: 'Bénédiction de l’Ancêtre', w: 4, fn() {
+        S.run.anger = Math.max(0, S.run.anger - 25);
+        return 'Colère des mamies réduite de 25.'; } },
+  ];
+
+  let S = null;
+  let lastStage = 0;
+  let lastBuffSig = '';
+  let goldenEl = null;
+  let goldenLeft = 0;
+  let buyMode = 1;
+  let pendingOk = null;
+  let combo = 0;
+  let lastClick = 0;
+  let last = performance.now();
+  const comboCap = () => (S.heaven['h-combo'] ? 100 : 50);
+  const rowEls = {};
+  const upEls = {};
+  const achEls = {};
+  const hvEls = {};
+  const spellEls = {};
+
+  function freshRun() {
+    const b = {};
+    BUILDINGS.forEach((x) => { b[x.key] = { n: 0, m: 1 }; });
+    return {
+      cookies: 0, baked: 0, clicks: 0, time: 0,
+      b, bought: {}, buffs: [],
+      anger: 0, pledgeLeft: 0, pledges: 0,
+      goldenIn: rand(70, 150), raidIn: 120, eventIn: rand(150, 260),
+      mana: 0,
+      mods: { clickAdd: 0, clickMult: 1, globalMult: 1, pledgeBonus: 0 },
+    };
+  }
+
+  function blank() {
+    return {
+      run: freshRun(),
+      life: { baked: 0, clicks: 0, golden: 0, pledges: 0, ascensions: 0, upgrades: 0, events: 0, bestCombo: 0, universes: 0, spells: 0 },
+      chips: 0,
+      ach: {},
+      heaven: {},
+      saved: Date.now(),
+    };
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return null;
+      const d = JSON.parse(raw);
+      const base = blank();
+      const fr = freshRun();
+      return {
+        ...base,
+        ...d,
+        life: { ...base.life, ...(d.life || {}) },
+        ach: d.ach || {},
+        heaven: d.heaven || {},
+        run: {
+          ...fr,
+          ...(d.run || {}),
+          b: { ...fr.b, ...((d.run && d.run.b) || {}) },
+          mods: { ...fr.mods, ...((d.run && d.run.mods) || {}) },
+          bought: (d.run && d.run.bought) || {},
+          buffs: (d.run && d.run.buffs) || [],
+        },
+      };
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function save() {
+    S.saved = Date.now();
+    try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage unavailable */ }
+  }
+
+  const B = (k) => S.run.b[k];
+  const achCount = () => Object.keys(S.ach).length;
+  const has = (k) => S.run.buffs.some((b) => b.key === k);
+  const addCookies = (x) => { S.run.cookies += x; S.run.baked += x; S.life.baked += x; };
+  const addBuff = (key, secs, target, label) => {
+    S.run.buffs = S.run.buffs.filter((b) => b.key !== key);
+    S.run.buffs.push({ key, left: secs, target: target === undefined ? null : target, label: label || null });
+  };
+
+  function log(msg) {
+    const ul = $('#log');
+    const li = document.createElement('li');
+    li.textContent = msg;
+    ul.prepend(li);
+    while (ul.children.length > 40) ul.lastChild.remove();
+  }
+
+  function costOf(b, count) {
+    const n = B(b.key).n;
+    return b.base * Math.pow(RATE, n) * (Math.pow(RATE, count) - 1) / (RATE - 1);
+  }
+
+  function maxAfford(b) {
+    let c = b.base * Math.pow(RATE, B(b.key).n);
+    let total = 0;
+    let k = 0;
+    while (k < 2000 && total + c <= S.run.cookies) {
+      total += c;
+      c *= RATE;
+      k++;
+    }
+    return k;
+  }
+
+  const qty = (b) => (buyMode === 'max' ? maxAfford(b) : buyMode);
+
+  function rawCps() {
+    const mut = S.run.buffs.find((b) => b.key === 'mutant');
+    const mutMult = S.heaven['h-mut'] ? 3 : 2;
+    return BUILDINGS.reduce((t, b) => {
+      const m = mut && mut.target === b.key ? mutMult : 1;
+      return t + B(b.key).n * b.cps * B(b.key).m * m;
+    }, 0);
+  }
+
+  function stageIndex() {
+    const a = S.run.anger;
+    return a >= 100 ? 4 : a >= 75 ? 3 : a >= 50 ? 2 : a >= 25 ? 1 : 0;
+  }
+
+  function stagePenalty() {
+    if (B('grandma').n <= 0 || S.run.pledgeLeft > 0) return 1;
+    return STAGE_MULT[stageIndex()];
+  }
+
+  function cpsNow() {
+    let m = S.run.mods.globalMult * (1 + 0.02 * S.chips) * (1 + 0.01 * achCount());
+    if (has('frenzy')) m *= 7;
+    if (has('clot')) m *= 0.5;
+    if (has('blessing')) m *= 1.5;
+    const uni = S.run.buffs.find((b) => b.key === 'universe');
+    if (uni) m *= uni.target;
+    return rawCps() * m * stagePenalty();
+  }
+
+  function clickValue() {
+    const m = S.run.mods;
+    let v = (1 + m.clickAdd) * m.clickMult * (1 + 0.02 * S.chips) * (1 + 0.01 * achCount());
+    if (has('storm')) v *= 77;
+    if (has('tsunami')) v *= 0.5;
+    v *= 1 + Math.min(combo, comboCap()) * 0.02;
+    return v;
+  }
+
+  function pledgeCost() {
+    return Math.max(1000, rawCps() * 600) * Math.pow(1.4, Math.min(S.run.pledges, 25));
+  }
+
+  function riftCost() {
+    return Math.max(5000, cpsNow() * 120);
+  }
+
+  function ascendGain() {
+    return Math.floor(Math.cbrt(S.run.baked / 1e9));
+  }
+
+  function floatText(text) {
+    const el = document.createElement('span');
+    el.className = 'float';
+    el.textContent = text;
+    el.style.left = (50 + rand(-18, 18)) + '%';
+    el.style.top = (42 + rand(-6, 6)) + '%';
+    $('#stage').appendChild(el);
+    setTimeout(() => el.remove(), 900);
+  }
+
+  function spawnGolden() {
+    const el = document.createElement('button');
+    el.className = 'golden';
+    el.setAttribute('aria-label', 'Cookie doré. Clique pour le récupérer.');
+    el.style.left = rand(12, 84) + '%';
+    el.style.top = rand(14, 76) + '%';
+    el.addEventListener('click', () => claimGolden(el));
+    $('#stage').appendChild(el);
+    goldenEl = el;
+    goldenLeft = 13;
+  }
+
+  function claimGolden(el) {
+    if (el !== goldenEl) return;
+    const total = GOLD.reduce((t, g) => t + g.w, 0);
+    let r = Math.random() * total;
+    let pick = GOLD[0];
+    for (const g of GOLD) {
+      if (r < g.w) { pick = g; break; }
+      r -= g.w;
+    }
+    const msg = pick.fn();
+    el.remove();
+    goldenEl = null;
+    S.life.golden++;
+    S.run.goldenIn = rand(70, 150);
+    log('Cookie doré : ' + pick.name + '. ' + msg);
+  }
+
+  function runEvent() {
+    const ev = pickRandom(EVENTS);
+    S.life.events++;
+    log('Événement : ' + ev.name + '. ' + ev.fn());
+  }
+
+  function openRift() {
+    const name = pickRandom(UNIVERSE_NAMES) + ' ' + Math.floor(rand(1, 999));
+    const mult = Math.round(rand(2, 12) * 10) / 10;
+    addBuff('universe', 90, mult, name);
+    S.life.universes++;
+    return 'Tu traverses vers « ' + name + ' » : production x' + String(mult).replace('.', ',') + ' pendant 90 secondes.';
+  }
+
+  function castSpell(id) {
+    const sp = SPELLS.find((x) => x.id === id);
+    const R = S.run;
+    if (!sp || R.mana < sp.cost) return;
+    if (sp.id === 'summon' && goldenEl) return;
+    R.mana -= sp.cost;
+    S.life.spells++;
+    log('Sort lancé : ' + sp.name + '. ' + sp.cast());
+    render();
+  }
+
+  function buyRift() {
+    const c = riftCost();
+    if (S.run.cookies < c) return;
+    S.run.cookies -= c;
+    log(openRift());
+    render();
+  }
+
+  function swearPledge() {
+    const R = S.run;
+    const c = pledgeCost();
+    if (R.pledgeLeft > 0 || R.cookies < c) return;
+    R.cookies -= c;
+    R.pledges++;
+    S.life.pledges++;
+    R.pledgeLeft = 60 + R.mods.pledgeBonus;
+    R.anger = Math.max(0, R.anger - 20);
+    log('Tu as prêté le serment de l’Ancien. Les mamies acceptent, à contrecœur.');
+    render();
+  }
+
+  function heavenSpent() {
+    return Object.keys(S.heaven).reduce((t, id) => {
+      const h = HEAVEN.find((x) => x.id === id);
+      return t + (h ? h.cost : 0);
+    }, 0);
+  }
+
+  function buyHeaven(id) {
+    const h = HEAVEN.find((x) => x.id === id);
+    if (!h || S.heaven[id] || S.chips - heavenSpent() < h.cost) return;
+    S.heaven[id] = true;
+    log('Amélioration céleste : ' + h.name + '.');
+    render();
+  }
+
+  function doAscend() {
+    const g = ascendGain();
+    if (g < 1) return;
+    S.chips += g;
+    S.life.ascensions++;
+    S.run = freshRun();
+    if (S.heaven['h-head']) S.run.cookies = 1000;
+    if (goldenEl) { goldenEl.remove(); goldenEl = null; }
+    lastStage = 0;
+    lastBuffSig = '';
+    log('Ascension ! Tu gagnes ' + g + ' puce' + (g > 1 ? 's' : '') + ' céleste' + (g > 1 ? 's' : '') + '.');
+    save();
+    render();
+  }
+
+  function ask(title, text, ok, fn) {
+    $('#m-title').textContent = title;
+    $('#m-text').textContent = text;
+    $('#m-ok').textContent = ok;
+    pendingOk = fn;
+    $('#modal').hidden = false;
+    $('#m-ok').focus();
+  }
+
+  function buyBuilding(key) {
+    const b = BUILDINGS.find((x) => x.key === key);
+    const count = qty(b);
+    if (count < 1) return;
+    const cost = costOf(b, count);
+    if (S.run.cookies < cost) return;
+    S.run.cookies -= cost;
+    const was = B(key).n;
+    B(key).n += count;
+    if (key === 'grandma' && was === 0) log('Une mamie est arrivée. Elle a des questions.');
+    render();
+  }
+
+  // Upgrades: generated per building, plus click, achievement and grandma ones.
+  const UPG = [];
+  BUILDINGS.forEach((b) => {
+    UPG.push({
+      id: b.key + '-1', name: 'Renforcé : ' + b.name, desc: b.name + ' : production x2.',
+      cost: b.base * 10, reqText: 'Posséder 1 ' + b.name,
+      req: () => B(b.key).n >= 1,
+      apply: () => { B(b.key).m *= 2; },
+    });
+    UPG.push({
+      id: b.key + '-2', name: 'Affûté : ' + b.name, desc: b.name + ' : production encore x2.',
+      cost: b.base * 500, reqText: 'Posséder 25 ' + b.name + 's',
+      req: () => B(b.key).n >= 25,
+      apply: () => { B(b.key).m *= 2; },
+    });
+    UPG.push({
+      id: b.key + '-3', name: 'Légendaire : ' + b.name, desc: b.name + ' : production x3.',
+      cost: b.base * 5e4, reqText: 'Posséder 100 ' + b.name + 's',
+      req: () => B(b.key).n >= 100,
+      apply: () => { B(b.key).m *= 3; },
+    });
+  });
+  UPG.push(
+    { id: 'click-1', name: 'Doigt renforcé', desc: '+1 cookie par clic.', cost: 100,
+      reqText: 'Toujours disponible', req: () => true,
+      apply: () => { S.run.mods.clickAdd += 1; } },
+    { id: 'click-2', name: 'Prévention du canal carpien', desc: '+5 cookies par clic.', cost: 5000,
+      reqText: 'Cliquer 500 fois cette partie', req: () => S.run.clicks >= 500,
+      apply: () => { S.run.mods.clickAdd += 5; } },
+    { id: 'click-3', name: 'Clics ambidextres', desc: 'Les clics valent deux fois plus.', cost: 1e6,
+      reqText: 'Cliquer 5 000 fois cette partie', req: () => S.run.clicks >= 5000,
+      apply: () => { S.run.mods.clickMult *= 2; } },
+    { id: 'click-4', name: 'Canon à cookies', desc: '+100 cookies par clic.', cost: 5e8,
+      reqText: 'Cliquer 50 000 fois cette partie', req: () => S.run.clicks >= 50000,
+      apply: () => { S.run.mods.clickAdd += 100; } },
+    { id: 'ach-1', name: 'Polissage du trophée', desc: 'Toute la production x1,05.', cost: 5e4,
+      reqText: 'Obtenir 5 succès', req: () => achCount() >= 5,
+      apply: () => { S.run.mods.globalMult *= 1.05; } },
+    { id: 'ach-2', name: 'Grand livre des miettes', desc: 'Toute la production x1,1.', cost: 1e7,
+      reqText: 'Obtenir 15 succès', req: () => achCount() >= 15,
+      apply: () => { S.run.mods.globalMult *= 1.1; } },
+    { id: 'ach-3', name: 'Salle des exploits', desc: 'Toute la production x1,15.', cost: 1e10,
+      reqText: 'Obtenir 30 succès', req: () => achCount() >= 30,
+      apply: () => { S.run.mods.globalMult *= 1.15; } },
+    { id: 'grandma-wool', name: 'Pulls de mamie', desc: 'Les mamies produisent deux fois plus.', cost: 1e5,
+      reqText: 'Posséder 10 Mamies', req: () => B('grandma').n >= 10,
+      apply: () => { B('grandma').m *= 2; } },
+    { id: 'wrath-tea', name: 'Service de tisane apaisante', desc: 'Les serments durent 30 secondes de plus.', cost: 2e6,
+      reqText: 'Prêter le serment deux fois', req: () => S.life.pledges >= 2,
+      apply: () => { S.run.mods.pledgeBonus += 30; } },
+  );
+
+  function buyUpgrade(id) {
+    const u = UPG.find((x) => x.id === id);
+    const R = S.run;
+    if (!u || R.bought[id] || !u.req() || R.cookies < u.cost) return;
+    R.cookies -= u.cost;
+    R.bought[id] = true;
+    u.apply();
+    S.life.upgrades++;
+    log('Amélioration achetée : ' + u.name + '.');
+    render();
+  }
+
+  // Achievements: persist across ascensions.
+  const ACH = [];
+  [
+    [1e3, 'Première fournée', 'Cuire 1 000 cookies au total'],
+    [1e6, 'Marée de cookies', 'Cuire 1 million de cookies au total'],
+    [1e9, 'Bocal sans fond', 'Cuire 1 milliard de cookies au total'],
+    [1e12, 'Empire du four', 'Cuire 1 000 milliards de cookies au total'],
+    [1e15, 'Singularité miette', 'Cuire 1 quadrillion de cookies au total'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'bake-' + t, name, desc, test: () => S.life.baked >= t }));
+  [
+    [100, 'Doigt démangé', 'Cliquer 100 fois'],
+    [1000, 'Tendinite héroïque', 'Cliquer 1 000 fois'],
+    [10000, 'Seigneur du poignet', 'Cliquer 10 000 fois'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'click-' + t, name, desc, test: () => S.life.clicks >= t }));
+  [
+    [1, 'Jour de chance', 'Attraper un cookie doré'],
+    [10, 'Chasseur doré', 'Attraper 10 cookies dorés'],
+    [50, 'Obsession dorée', 'Attraper 50 cookies dorés'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'gold-' + t, name, desc, test: () => S.life.golden >= t }));
+  [
+    [1, 'Juré de la pâte', 'Prêter le serment de l’Ancien'],
+    [5, 'Pieux casse-pieds', 'Prêter le serment cinq fois'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'pledge-' + t, name, desc, test: () => S.life.pledges >= t }));
+  [
+    [1, 'Renaissance', 'Faire une ascension'],
+    [3, 'Habitué du paradis', 'Faire trois ascensions'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'asc-' + t, name, desc, test: () => S.life.ascensions >= t }));
+  [
+    [10, 'Accro au shopping', 'Acheter 10 améliorations'],
+    [30, 'Collectionneur de gadgets', 'Acheter 30 améliorations'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'up-' + t, name, desc, test: () => S.life.upgrades >= t }));
+  [
+    [1, 'Touriste interdimensionnel', 'Visiter un univers parallèle'],
+    [10, 'Voyageur des strates', 'Visiter dix univers parallèles'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'univ-' + t, name, desc, test: () => S.life.universes >= t }));
+  [
+    [10, 'Connaisseur du chaos', 'Déclencher 10 événements'],
+    [50, 'Grand chaos', 'Déclencher 50 événements'],
+  ].forEach(([t, name, desc]) => ACH.push({ id: 'ev-' + t, name, desc, test: () => S.life.events >= t }));
+  ACH.push({ id: 'spell-1', name: 'Sorcier de cuisine', desc: 'Lancer un sort', test: () => S.life.spells >= 1 });
+  ACH.push({ id: 'combo-50', name: 'Maniaque du combo', desc: 'Atteindre un combo de 50', test: () => S.life.bestCombo >= 50 });
+  ACH.push({ id: 'heaven-1', name: 'Shopping céleste', desc: 'Acheter une amélioration céleste', test: () => Object.keys(S.heaven).length >= 1 });
+  BUILDINGS.forEach((b) => {
+    ACH.push({ id: 'own-' + b.key, name: 'Passionné : ' + b.name, desc: 'Posséder 10 ' + b.name + 's',
+      test: () => B(b.key).n >= 10 });
+  });
+
+  function buildLists() {
+    const bl = $('#buildings');
+    BUILDINGS.forEach((b, i) => {
+      const el = document.createElement('button');
+      el.className = 'row';
+      el.dataset.buy = b.key;
+      el.style.setProperty('--h', String((i * 27 + 20) % 360));
+      el.innerHTML =
+        '<span class="dot"></span>' +
+        '<span class="info"><b>' + b.name + '</b><small></small></span>' +
+        '<span class="meta"><span class="count"></span><span class="cost"></span></span>';
+      bl.appendChild(el);
+      rowEls[b.key] = el;
+    });
+
+    const ul = $('#upgrades');
+    UPG.forEach((u) => {
+      const el = document.createElement('button');
+      el.className = 'row';
+      el.dataset.up = u.id;
+      el.innerHTML =
+        '<span class="info"><b>' + u.name + '</b><small></small></span>' +
+        '<span class="meta"><span class="cost"></span></span>';
+      ul.appendChild(el);
+      upEls[u.id] = el;
+    });
+
+    const al = $('#achievements');
+    ACH.forEach((a) => {
+      const el = document.createElement('div');
+      el.className = 'ach';
+      el.innerHTML = '<b>' + a.name + '</b><small>' + a.desc + '</small>';
+      al.appendChild(el);
+      achEls[a.id] = el;
+    });
+    $('#ach-total').textContent = ACH.length;
+
+    const sl = $('#spells');
+    SPELLS.forEach((sp) => {
+      const el = document.createElement('button');
+      el.className = 'row';
+      el.dataset.spell = sp.id;
+      el.innerHTML =
+        '<span class="info"><b>' + sp.name + '</b><small>' + sp.desc + '</small></span>' +
+        '<span class="meta"><span class="cost"></span></span>';
+      sl.appendChild(el);
+      spellEls[sp.id] = el;
+    });
+
+    const hv = document.createElement('div');
+    hv.className = 'card-block';
+    hv.innerHTML = '<h2>Améliorations célestes</h2><p>Dépense des puces célestes en avantages permanents. <b id="hv-avail">0</b> puce(s) disponible(s).</p><div id="heaven" class="list"></div>';
+    $('#tab-ascend').insertBefore(hv, $('#tab-ascend').children[1]);
+    HEAVEN.forEach((h) => {
+      const el = document.createElement('button');
+      el.className = 'row';
+      el.dataset.hv = h.id;
+      el.innerHTML = '<span class="info"><b>' + h.name + '</b><small>' + h.desc + '</small></span>' +
+        '<span class="meta"><span class="cost"></span></span>';
+      $('#heaven').appendChild(el);
+      hvEls[h.id] = el;
+    });
+  }
+
+  function renderBuffs() {
+    const sig = S.run.buffs.map((b) => b.key + Math.ceil(b.left)).join('|');
+    if (sig === lastBuffSig) return;
+    lastBuffSig = sig;
+    $('#buffs').innerHTML = S.run.buffs
+      .map((b) => '<span class="buff ' + b.key + '">' + (b.label || BUFF_NAMES[b.key]) + ' <span>' + Math.ceil(b.left) + 's</span></span>')
+      .join('');
+  }
+
+  function render() {
+    const R = S.run;
+    $('#cookies').textContent = fmt(R.cookies);
+    $('#cps').textContent = fmt(cpsNow());
+    $('#click').textContent = fmt(clickValue());
+    $('#lifetime').textContent = fmt(S.life.baked);
+    renderBuffs();
+
+    const si = stageIndex();
+    $('#anger-fill').style.width = R.anger + '%';
+    $('#anger-meter').setAttribute('aria-valuenow', String(Math.floor(R.anger)));
+    $('#anger-stage').textContent = STAGE_NAMES[si];
+    $('#anger-num').textContent = Math.floor(R.anger) + ' / 100 · ' + (R.pledgeLeft > 0 ? 'serment actif' : 'colère montante');
+    const pen = Math.round((1 - stagePenalty()) * 100);
+    $('#stage-mult').textContent = pen > 0 ? 'Pénalité de production -' + pen + ' %' : 'Aucune pénalité';
+
+    const pc = pledgeCost();
+    const pb = $('#pledge-btn');
+    pb.disabled = R.pledgeLeft > 0 || R.cookies < pc;
+    pb.textContent = R.pledgeLeft > 0 ? 'Serment actif : ' + Math.ceil(R.pledgeLeft) + ' s restantes' : 'Prêter le serment de l’Ancien';
+    $('#pledge-cost').textContent = fmt(pc);
+    $('#pledges-run').textContent = R.pledges;
+
+    $('#mana').textContent = fmt(R.mana);
+    $('#mana-max').textContent = MANA_CAP;
+    SPELLS.forEach((sp) => {
+      const el = spellEls[sp.id];
+      el.disabled = R.mana < sp.cost || (sp.id === 'summon' && !!goldenEl);
+      el.querySelector('.cost').textContent = sp.cost + ' mana';
+    });
+
+    const rc = riftCost();
+    $('#rift-cost').textContent = fmt(rc);
+    $('#rift-btn').disabled = R.cookies < rc;
+    $('#univ-count').textContent = S.life.universes;
+
+    const g = ascendGain();
+    $('#ascend-gain').textContent = g;
+    $('#chips').textContent = S.chips;
+    $('#chip-bonus').textContent = '+' + (S.chips * 2) + ' %';
+    $('#run-baked').textContent = fmt(R.baked);
+    const need = Math.pow(g + 1, 3) * 1e9 - R.baked;
+    $('#next-chip').textContent = 'Cuis encore ' + fmt(need) + ' cette partie pour la prochaine puce.';
+    $('#ascend-btn').disabled = g < 1;
+    $('#st-clicks').textContent = fmt(S.life.clicks);
+    $('#st-golden').textContent = S.life.golden;
+    $('#st-asc').textContent = S.life.ascensions;
+    $('#st-up').textContent = S.life.upgrades;
+
+    BUILDINGS.forEach((b) => {
+      const el = rowEls[b.key];
+      const n = B(b.key).n;
+      const count = buyMode === 'max' ? Math.max(1, maxAfford(b)) : buyMode;
+      const cost = costOf(b, count);
+      el.disabled = buyMode === 'max' ? maxAfford(b) < 1 : R.cookies < cost;
+      el.querySelector('.count').textContent = n + ' possédé(s)';
+      el.querySelector('.cost').textContent = (buyMode === 'max' ? '×' + count + ' · ' : '') + fmt(cost);
+      el.querySelector('small').textContent = b.desc + ' (' + fmt(b.cps * B(b.key).m) + '/s chacun)';
+    });
+
+    UPG.forEach((u) => {
+      const el = upEls[u.id];
+      const done = !!R.bought[u.id];
+      const ok = !done && u.req();
+      el.classList.toggle('done', done);
+      el.classList.toggle('locked', !done && !ok);
+      el.disabled = done || !ok || R.cookies < u.cost;
+      el.querySelector('small').textContent = done ? 'Acquise' : ok ? u.desc : 'Requis : ' + u.reqText;
+      el.querySelector('.cost').textContent = done ? '' : fmt(u.cost);
+    });
+
+    const avail = S.chips - heavenSpent();
+    const hva = $('#hv-avail');
+    if (hva) hva.textContent = avail;
+    HEAVEN.forEach((h) => {
+      const el = hvEls[h.id];
+      if (!el) return;
+      const owned = !!S.heaven[h.id];
+      el.classList.toggle('done', owned);
+      el.disabled = owned || avail < h.cost;
+      el.querySelector('.cost').textContent = owned ? 'Acquise' : h.cost + ' puces';
+    });
+
+    ACH.forEach((a) => {
+      achEls[a.id].classList.toggle('got', !!S.ach[a.id]);
+    });
+    $('#ach-count').textContent = achCount();
+  }
+
+  function tick() {
+    const t = performance.now();
+    const dt = Math.min(1, (t - last) / 1000);
+    last = t;
+    const R = S.run;
+    R.time += dt;
+
+    R.buffs.forEach((b) => { b.left -= dt; });
+    R.buffs = R.buffs.filter((b) => b.left > 0);
+
+    // Mana regenerates, faster with grandmas and the grimoire upgrade.
+    const g = B('grandma').n;
+    R.mana = Math.min(MANA_CAP, R.mana + dt * (0.3 + g * 0.02) * (S.heaven['h-grimoire'] ? 2 : 1));
+
+    // Grandma anger
+    let rate;
+    if (R.pledgeLeft > 0 || has('bingo')) rate = 0;
+    else if (has('gravity')) rate = -1.2;
+    else if (g <= 0) rate = -0.3;
+    else rate = (0.2 + 0.012 * g) * (1 + R.time / 900) * (S.heaven['h-immortal'] ? 0.5 : 1);
+    R.anger = Math.min(100, Math.max(0, R.anger + rate * dt));
+
+    const si = stageIndex();
+    if (si !== lastStage) {
+      log(si > lastStage ? STAGE_TEXT[si] : 'Les mamies se calment un peu.');
+      lastStage = si;
+    }
+
+    if (R.pledgeLeft > 0) {
+      R.pledgeLeft = Math.max(0, R.pledgeLeft - dt);
+      if (R.pledgeLeft === 0) log('Ton serment s’est dissipé. Les mamies s’en souviennent.');
+    }
+
+    // Grandma raids at high anger, unless pledged or insured.
+    if (si >= 2 && R.pledgeLeft <= 0 && g > 0 && !S.heaven['h-chaos']) {
+      R.raidIn -= dt;
+      if (R.raidIn <= 0) {
+        R.raidIn = rand(100, 160);
+        const loss = R.cookies * (si >= 4 ? 0.1 : 0.03);
+        R.cookies -= loss;
+        log('Une mamie a pillé la réserve et volé ' + fmt(loss) + ' cookies.');
+      }
+    }
+
+    // Random events and cookie rain
+    R.eventIn -= dt;
+    if (R.eventIn <= 0) {
+      R.eventIn = rand(150, 260) * (S.heaven['h-chaos'] ? 0.5 : 1);
+      runEvent();
+    }
+    if (has('rain')) addCookies(clickValue() * dt * 20);
+
+    // Golden cookies
+    if (goldenEl) {
+      goldenLeft -= dt;
+      if (goldenLeft <= 0) { goldenEl.remove(); goldenEl = null; R.goldenIn = rand(70, 150); }
+    } else {
+      R.goldenIn -= dt * (S.heaven['h-lucky'] ? 1.5 : 1);
+      if (R.goldenIn <= 0) spawnGolden();
+    }
+
+    addCookies(cpsNow() * dt);
+
+    for (const a of ACH) {
+      if (!S.ach[a.id] && a.test()) {
+        S.ach[a.id] = true;
+        log('Succès débloqué : ' + a.name + '.');
+      }
+    }
+
+    render();
+  }
+
+  function init() {
+    const loaded = loadState();
+    S = loaded || blank();
+    buildLists();
+
+    if (loaded) {
+      const away = Math.min(8 * 3600, (Date.now() - S.saved) / 1000);
+      if (away > 30) {
+        const gain = cpsNow() * away * 0.5;
+        addCookies(gain);
+        log('Rebienvenue. Tes fours ont cuit ' + fmt(gain) + ' cookies pendant ton absence (demi-régime, 8 heures max).');
+      } else {
+        log('Rebienvenue au four.');
+      }
+    } else {
+      log('DoigtDePied : bienvenue dans le four. Clique le cookie, les mamies te regardent.');
+    }
+    lastStage = stageIndex();
+
+    $('#version').textContent = 'v' + VERSION + ' · ' + RELEASE_LABEL;
+
+    $('#cookie').addEventListener('click', () => {
+      const now = performance.now();
+      combo = now - lastClick < 600 ? combo + 1 : 0;
+      lastClick = now;
+      if (combo > S.life.bestCombo) S.life.bestCombo = combo;
+      if (combo > 0 && combo % 25 === 0) log('Combo x' + combo + ' ! Tes doigts sont en feu.');
+      const v = clickValue();
+      addCookies(v);
+      S.run.clicks++;
+      S.life.clicks++;
+      S.run.mana = Math.min(MANA_CAP, S.run.mana + 0.05);
+      floatText('+' + fmt(v));
+      const c = $('#cookie');
+      c.classList.remove('pop');
+      void c.offsetWidth;
+      c.classList.add('pop');
+      setTimeout(() => c.classList.remove('pop'), 90);
+      render();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && $('#modal').hidden && !e.target.closest('button, input, a')) {
+        e.preventDefault();
+        $('#cookie').click();
+      }
+    });
+
+    $('#buildings').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-buy]');
+      if (btn) buyBuilding(btn.dataset.buy);
+    });
+    $('#upgrades').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-up]');
+      if (btn) buyUpgrade(btn.dataset.up);
+    });
+    $('#spells').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-spell]');
+      if (btn) castSpell(btn.dataset.spell);
+    });
+    $('#heaven').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-hv]');
+      if (btn) buyHeaven(btn.dataset.hv);
+    });
+    $('#rift-btn').addEventListener('click', buyRift);
+
+    $$('[data-mode]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        buyMode = btn.dataset.mode === 'max' ? 'max' : Number(btn.dataset.mode);
+        $$('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        render();
+      });
+    });
+
+    $$('[data-tab]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        $$('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+        $$('.panel').forEach((p) => { p.hidden = p.id !== 'tab-' + btn.dataset.tab; });
+      });
+    });
+
+    $('#pledge-btn').addEventListener('click', swearPledge);
+
+    $('#ascend-btn').addEventListener('click', () => {
+      const g = ascendGain();
+      if (g < 1) return;
+      ask('Ascension ?',
+        'Tu gagnes ' + g + ' puce' + (g > 1 ? 's' : '') + ' céleste' + (g > 1 ? 's' : '') + ', chacune ajoutant 2 % à la production. Cookies, bâtiments et améliorations sont remis à zéro. Succès et puces sont conservés.',
+        'Ascension', doAscend);
+    });
+
+    $('#reset-btn').addEventListener('click', () => {
+      ask('Tout effacer ?',
+        'Cela supprime tout, y compris les succès et les puces célestes. Action irréversible.',
+        'Tout effacer', () => {
+          try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+          location.reload();
+        });
+    });
+
+    $('#m-ok').addEventListener('click', () => {
+      $('#modal').hidden = true;
+      const fn = pendingOk;
+      pendingOk = null;
+      if (fn) fn();
+    });
+    $('#m-cancel').addEventListener('click', () => {
+      $('#modal').hidden = true;
+      pendingOk = null;
+    });
+
+    last = performance.now();
+    setInterval(tick, 100);
+    setInterval(save, 5000);
+    window.addEventListener('beforeunload', save);
+    render();
+  }
+
+  init();
+})();
+</script>
+
+</body></html>
